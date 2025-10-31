@@ -1,0 +1,108 @@
+<div class="movie-details">
+
+  <div *ngIf="loading" class="loading-container">
+    <div class="spinner"></div>
+    <p>Loading movie details...</p>
+  </div>
+
+  <div *ngIf="error && !loading" class="error-container">
+    <h3>🎭 Error Loading Movie</h3>
+    <p>{{ error }}</p>
+    <button (click)="goBack()" class="back-button">Back to Movies</button>
+  </div>
+
+  <div *ngIf="movie && !loading" class="movie-details-content">
+    <!-- Backdrop Section -->
+    <div class="backdrop-section" *ngIf="movie.fullBackdropPath">
+      <img 
+        [src]="movie.fullBackdropPath" 
+        [alt]="movie.title + ' backdrop'"
+        class="backdrop-image"
+        (error)="handleImageError($event)"
+      />
+      <div class="backdrop-overlay"></div>
+    </div>
+
+    <!-- Movie Content -->
+    <div class="movie-content">
+      <div class="movie-header">
+        <div class="poster-section">
+          <img 
+            [src]="movie.fullPosterPath" 
+            [alt]="movie.title"
+            class="movie-poster"
+            (error)="handleImageError($event)"
+          />
+        </div>
+
+        <div class="movie-info">
+          <h1 class="movie-title">{{ movie.title || 'Untitled' }}</h1>
+          
+          <div class="movie-meta">
+            <div class="meta-item">
+              <span class="release-year">{{ (movie.releaseDate | date:'yyyy') || 'Unknown' }}</span>
+              <span *ngIf="movie.runtime" class="runtime">
+                • {{ formatRuntime(movie.runtime) }}
+              </span>
+              <span class="language">• {{ (movie.originalLanguage | uppercase) || 'Unknown' }}</span>
+            </div>
+
+            <div class="rating-section">
+              <div class="rating-circle" [style.background]="getRatingColor(movie.voteAverage)">
+                <span class="rating-value">{{ getRatingDisplay(movie.voteAverage) }}</span>
+              </div>
+              <div class="rating-info">
+                <div class="rating-stars">
+                  <span *ngFor="let star of [1,2,3,4,5]" 
+                        [class.filled]="star <= (movie.voteAverage || 0) / 2">
+                    ⭐
+                  </span>
+                </div>
+                <span class="vote-count">{{ (movie.voteCount | number) || 0 }} votes</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="genres-section" *ngIf="movie.genres && movie.genres.length > 0">
+            <h3>Genres</h3>
+            <div class="genres-list">
+              <span *ngFor="let genre of movie.genres" class="genre-tag">
+                {{ genre.name }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Overview Section -->
+      <div class="overview-section" *ngIf="movie.overview">
+        <h2>📖 Overview</h2>
+        <p class="movie-overview">{{ movie.overview }}</p>
+      </div>
+
+      <!-- Additional Info -->
+      <div class="additional-info">
+        <div class="info-item">
+          <strong>Release Date:</strong> 
+          {{ (movie.releaseDate | date:'MMMM d, yyyy') || 'Unknown' }}
+        </div>
+        <div class="info-item" *ngIf="movie.runtime">
+          <strong>Runtime:</strong> 
+          {{ formatRuntime(movie.runtime) }}
+        </div>
+        <div class="info-item">
+          <strong>Original Language:</strong> 
+          {{ (movie.originalLanguage | uppercase) || 'Unknown' }}
+        </div>
+        <div class="info-item">
+          <strong>Rating:</strong> 
+          {{ getRatingDisplay(movie.voteAverage) }}/10 ({{ (movie.voteCount | number) || 0 }} votes)
+        </div>
+      </div>
+
+      <div class="movie-actions">
+        <button (click)="goBack()" class="back-button">← Back to Movies</button>
+      </div>
+    </div>
+  </div>
+</div>

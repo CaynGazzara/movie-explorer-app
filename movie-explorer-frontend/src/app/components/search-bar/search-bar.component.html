@@ -1,0 +1,22 @@
+<div class="search-bar">
+  <div class="search-container">
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      (input)="onInputChange()"
+      (keyup)="onKeyPress($event)"
+      placeholder="Search for movies..."
+      class="search-input"
+    />
+    <button 
+      *ngIf="searchQuery" 
+      (click)="onClear()" 
+      class="clear-button"
+    >
+      ✕
+    </button>
+    <button (click)="onInputChange()" class="search-button">
+      🔍 Search
+    </button>
+  </div>
+</div>

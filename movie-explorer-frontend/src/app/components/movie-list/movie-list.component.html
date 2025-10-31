@@ -1,0 +1,173 @@
+<div class="movie-list">
+  <!-- Search Bar -->
+  <app-search-bar 
+    (search)="onSearch($event)"
+    (clear)="onClearSearch()"
+  ></app-search-bar>
+
+  <!-- Navigation Tabs -->
+  <div class="nav-tabs" *ngIf="!hasSearched && !loading">
+    <button 
+      (click)="loadPopularMovies()" 
+      [class.active]="searchType === 'popular'"
+      class="tab-button"
+    >
+      🎯 Popular
+    </button>
+    <button 
+      (click)="loadNowPlayingMovies()" 
+      [class.active]="searchType === 'now-playing'"
+      class="tab-button"
+    >
+      🎬 Now Playing
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading movies...</p>
+  </div>
+
+  <!-- Results Info -->
+  <div *ngIf="searchResult && !loading" class="results-info">
+    <div class="results-count">
+      <span *ngIf="hasSearched; else defaultTitle">
+        🔍 Search Results for "{{ currentQuery }}"
+      </span>
+      <ng-template #defaultTitle>
+        <span *ngIf="searchType === 'popular'">🎯 Popular Movies</span>
+        <span *ngIf="searchType === 'now-playing'">🎬 Now Playing</span>
+      </ng-template>
+      <span class="count-badge">{{ searchResult.total_results }} movies</span>
+    </div>
+    <div *ngIf="searchResult.total_results > 0" class="pagination-info">
+      Page {{ currentPage }} of {{ searchResult.total_pages }}
+    </div>
+  </div>
+
+  <!-- Movies Grid -->
+  <div class="movies-grid" *ngIf="movies.length > 0 && !loading; else noResults">
+    <div 
+      *ngFor="let movie of movies" 
+      class="movie-card"
+      (click)="viewMovieDetails(movie.id)"
+    >
+      <div class="movie-poster">
+        <img 
+          [src]="movie.poster_path ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path : 'assets/no-poster.png'" 
+          [alt]="movie.title"
+          (error)="handleImageError($event)"
+        />
+        <div class="movie-rating" [style.background]="getRatingColor(movie.vote_average)">
+          ⭐ {{ getRatingDisplay(movie.vote_average) }}
+        </div>
+      </div>
+      
+      <div class="movie-info">
+        <h3 class="movie-title">{{ movie.title || 'Untitled' }}</h3>
+        <p class="movie-release">{{ (movie.release_date | date:'yyyy') || 'Unknown' }}</p>
+        <p class="movie-overview">
+          {{ (movie.overview || 'No description available') | truncate:120 }}
+        </p>
+        <div class="movie-genres" *ngIf="movie.genre_ids && movie.genre_ids.length > 0">
+          <span 
+            *ngFor="let genreId of movie.genre_ids.slice(0, 2)" 
+            class="genre-tag"
+          >
+            {{ getGenreName(genreId) }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Paginação Completa -->
+  <div *ngIf="searchResult && searchResult.total_results > 0 && !loading" class="pagination">
+    <!-- Botão Previous -->
+    <button 
+      (click)="previousPage()" 
+      [disabled]="currentPage === 1"
+      class="pagination-button pagination-prev"
+    >
+      ‹ Previous
+    </button>
+
+    <!-- Primeira Página -->
+    <button 
+      *ngIf="currentPage > 3"
+      (click)="goToPage(1)"
+      class="pagination-number"
+    >
+      1
+    </button>
+
+    <!-- Ellipsis -->
+    <span *ngIf="currentPage > 4" class="pagination-ellipsis">...</span>
+
+    <!-- Números das Páginas -->
+    <button 
+      *ngFor="let page of getPages()"
+      (click)="goToPage(page)"
+      [class.active]="page === currentPage"
+      class="pagination-number"
+    >
+      {{ page }}
+    </button>
+
+    <!-- Ellipsis -->
+    <span *ngIf="currentPage < searchResult.total_pages - 3" class="pagination-ellipsis">...</span>
+
+    <!-- Última Página -->
+    <button 
+      *ngIf="currentPage < searchResult.total_pages - 2"
+      (click)="goToPage(searchResult.total_pages)"
+      class="pagination-number"
+    >
+      {{ searchResult.total_pages }}
+    </button>
+
+    <!-- Botão Next -->
+    <button 
+      (click)="nextPage()" 
+      [disabled]="currentPage >= searchResult.total_pages"
+      class="pagination-button pagination-next"
+    >
+      Next ›
+    </button>
+  </div>
+
+  <!-- Informação da Página Atual -->
+  <div *ngIf="searchResult && searchResult.total_results > 0 && !loading" class="page-info">
+    Showing page {{ currentPage }} of {{ searchResult.total_pages }}
+    ({{ searchResult.total_results }} total movies)
+  </div>
+
+  <!-- Empty States -->
+  <ng-template #noResults>
+    <div class="empty-state" *ngIf="!loading">
+      <div *ngIf="hasSearched; else initialState">
+        <h3>🎭 No movies found</h3>
+        <p>Try adjusting your search terms or browse popular movies.</p>
+        <button (click)="loadPopularMovies()" class="browse-button">
+          Browse Popular Movies
+        </button>
+      </div>
+      <ng-template #initialState>
+        <div class="welcome-message">
+          <h3>Welcome to Movie Explorer! 🎬</h3>
+          <p>Search for movies or browse popular and now playing titles.</p>
+          <div class="feature-tips">
+            <h4>Features:</h4>
+            <ul>
+              <li>🔍 Search for any movie</li>
+              <li>🎯 Browse popular movies</li>
+              <li>🎬 See what's playing now</li>
+              <li>⭐ View ratings and details</li>
+            </ul>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </ng-template>
+</div>

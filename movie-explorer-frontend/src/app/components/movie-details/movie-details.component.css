@@ -1,0 +1,289 @@
+.movie-details {
+  min-height: 100vh;
+}
+
+.back-button {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.back-button:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.loading-container,
+.error-container {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 2rem;
+}
+
+.loading-container .spinner {
+  width: 60px;
+  height: 60px;
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-top: 4px solid #48dbfb;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-container h3 {
+  color: #ff6b6b;
+  margin-bottom: 1rem;
+}
+
+.backdrop-section {
+  position: relative;
+  height: 60vh;
+  overflow: hidden;
+}
+
+.backdrop-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.backdrop-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.3) 0%,
+    rgba(15, 12, 41, 0.8) 70%,
+    #0f0c29 100%
+  );
+}
+
+.movie-content {
+  position: relative;
+  margin-top: -100px;
+  z-index: 2;
+  padding: 0 2rem;
+}
+
+.movie-header {
+  display: flex;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.poster-section {
+  flex-shrink: 0;
+}
+
+.movie-poster {
+  width: 300px;
+  height: 450px;
+  border-radius: 15px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  object-fit: cover;
+}
+
+.movie-info {
+  flex: 1;
+  padding-top: 2rem;
+}
+
+.movie-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: white;
+  margin: 0 0 1rem 0;
+  line-height: 1.1;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.movie-meta {
+  margin-bottom: 2rem;
+}
+
+.meta-item {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.release-year,
+.runtime,
+.language {
+  margin-right: 1rem;
+}
+
+.rating-section {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.rating-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: white;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+.rating-value {
+  font-size: 1.5rem;
+}
+
+.rating-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.rating-stars .filled {
+  color: #feca57;
+}
+
+.vote-count {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+}
+
+.genres-section h3 {
+  color: white;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.genres-list {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.genre-tag {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.overview-section {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2rem;
+  border-radius: 15px;
+  margin-bottom: 2rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.overview-section h2 {
+  color: white;
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
+}
+
+.movie-overview {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.additional-info {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2rem;
+  border-radius: 15px;
+  margin-bottom: 2rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.info-item {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.info-item strong {
+  color: #48dbfb;
+  display: block;
+  margin-bottom: 0.3rem;
+  font-size: 0.9rem;
+}
+
+.movie-actions {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .movie-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem;
+  }
+
+  .movie-poster {
+    width: 250px;
+    height: 375px;
+  }
+
+  .movie-title {
+    font-size: 2rem;
+  }
+
+  .movie-content {
+    padding: 0 1rem;
+    margin-top: -50px;
+  }
+
+  .rating-section {
+    justify-content: center;
+  }
+
+  .backdrop-section {
+    height: 40vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .movie-poster {
+    width: 200px;
+    height: 300px;
+  }
+
+  .movie-title {
+    font-size: 1.5rem;
+  }
+
+  .additional-info {
+    grid-template-columns: 1fr;
+  }
+}
