@@ -40,25 +40,25 @@
           
           <div class="movie-meta">
             <div class="meta-item">
-              <span class="release-year">{{ (movie.releaseDate | date:'yyyy') || 'Unknown' }}</span>
+              <span class="release-year">{{ (movie.release_date | date:'yyyy') || 'Unknown' }}</span>
               <span *ngIf="movie.runtime" class="runtime">
                 • {{ formatRuntime(movie.runtime) }}
               </span>
-              <span class="language">• {{ (movie.originalLanguage | uppercase) || 'Unknown' }}</span>
+              <span class="language">• {{ (movie.original_language | uppercase) || 'Unknown' }}</span>
             </div>
 
             <div class="rating-section">
-              <div class="rating-circle" [style.background]="getRatingColor(movie.voteAverage)">
-                <span class="rating-value">{{ getRatingDisplay(movie.voteAverage) }}</span>
+              <div class="rating-circle" [style.background]="getRatingColor(movie.vote_average)">
+                <span class="rating-value">{{ getRatingDisplay(movie.vote_average) }}</span>
               </div>
               <div class="rating-info">
                 <div class="rating-stars">
                   <span *ngFor="let star of [1,2,3,4,5]" 
-                        [class.filled]="star <= (movie.voteAverage || 0) / 2">
+                        [class.filled]="star <= (movie.vote_average || 0) / 2">
                     ⭐
                   </span>
                 </div>
-                <span class="vote-count">{{ (movie.voteCount | number) || 0 }} votes</span>
+                <span class="vote-count">{{ (movie.vote_count | number) || 0 }} votes</span>
               </div>
             </div>
           </div>
@@ -84,7 +84,7 @@
       <div class="additional-info">
         <div class="info-item">
           <strong>Release Date:</strong> 
-          {{ (movie.releaseDate | date:'MMMM d, yyyy') || 'Unknown' }}
+          {{ (movie.release_date | date:'MMMM d, yyyy') || 'Unknown' }}
         </div>
         <div class="info-item" *ngIf="movie.runtime">
           <strong>Runtime:</strong> 
@@ -92,11 +92,11 @@
         </div>
         <div class="info-item">
           <strong>Original Language:</strong> 
-          {{ (movie.originalLanguage | uppercase) || 'Unknown' }}
+          {{ (movie.original_language | uppercase) || 'Unknown' }}
         </div>
         <div class="info-item">
           <strong>Rating:</strong> 
-          {{ getRatingDisplay(movie.voteAverage) }}/10 ({{ (movie.voteCount | number) || 0 }} votes)
+          {{ getRatingDisplay(movie.vote_average) }}/10 ({{ (movie.vote_count | number) || 0 }} votes)
         </div>
       </div>
 

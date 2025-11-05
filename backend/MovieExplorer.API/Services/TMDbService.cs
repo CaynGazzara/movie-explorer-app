@@ -34,7 +34,7 @@ namespace MovieExplorer.API.Services
                     throw new HttpRequestException($"TMDB API error: {response.StatusCode}");
                 }
 
-                var content = await response.Content.ReadAsStringAsync();
+                var content = await response.Content.ReadAsStringAsync();         
                 var result = JsonSerializer.Deserialize<MovieSearchResult>(content, new JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true
